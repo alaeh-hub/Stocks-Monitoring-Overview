@@ -1,0 +1,17 @@
+# Optional. Use when the Stocks Monitoring MySQL is NOT published on a host port.
+# This joins the dashboard to the Docker network your stocks stack already uses.
+#
+#   STOCKS_NETWORK=<that network's name>   (see `docker network ls`)
+#   STOCKS_DB_HOST=<the MySQL service name in your stocks compose file>
+#
+#   docker compose -f docker-compose.yml -f docker-compose.shared-network.yml up --build
+services:
+  app:
+    networks:
+      - default
+      - stocks
+
+networks:
+  stocks:
+    external: true
+    name: ${STOCKS_NETWORK:-stocks-shared}

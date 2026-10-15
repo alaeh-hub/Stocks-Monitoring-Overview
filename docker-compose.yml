@@ -1,0 +1,37 @@
+name: stocks-dashboard
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8000"
+    env_file: .env
+    depends_on:
+      dashboard-db:
+        condition: service_healthy
+    # Lets the container reach a MySQL published on this PC's port (Windows, Mac and Linux).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  # Laravel's OWN database. The Stocks Monitoring database is never created or changed here.
+  dashboard-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - dashboard-db-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+volumes:
+  dashboard-db-data:

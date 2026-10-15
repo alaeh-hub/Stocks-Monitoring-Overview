@@ -1,0 +1,68 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --paper: #f6f4ea;
+  --panel: #ffffff;
+  --ink: #0a0a0a;
+  --muted: #5c5a4d;
+  --line: #e0dcc8;
+  --online: #a16207;
+  --offline: #52525b;
+  --alert: #cf3a2c;
+  --deep: #0a0a0a;
+  --deep-ink: #fff8dc;
+  --accent: #facc15;
+  color-scheme: light;
+}
+
+.dark {
+  --paper: #0b0b09;
+  --panel: #111111;
+  --ink: #f5f5f0;
+  --muted: #a3a38f;
+  --line: #2a2a22;
+  --online: #facc15;
+  --offline: #d4d4d8;
+  --alert: #f2705f;
+  --deep: #141100;
+  --deep-ink: #fff8dc;
+  --accent: #facc15;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-online: var(--online);
+  --color-offline: var(--offline);
+  --color-alert: var(--alert);
+  --color-deep: var(--deep);
+  --color-deep-ink: var(--deep-ink);
+  --color-accent: var(--accent);
+  --font-display: "Outfit Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+html { background: var(--paper); }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.num { font-variant-numeric: tabular-nums; }
+.display { font-family: var(--font-display); letter-spacing: -0.02em; }
+
+:focus-visible { outline: 2px solid var(--online); outline-offset: 2px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
