@@ -55,7 +55,7 @@ class StockDashboardService
 
         $audit = $this->audit();
 
-        return $base + [
+        return array_merge($base, [
             'empty' => false,
             'period' => $period + [
                 'status' => $this->closureStatus($closure),
@@ -92,7 +92,7 @@ class StockDashboardService
             'audit' => $audit,
             'closures' => $this->closures(),
             'activity' => $this->activity(),
-        ];
+        ]);
     }
 
     // ---------------------------------------------------------------- periods
